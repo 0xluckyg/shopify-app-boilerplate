@@ -1,3 +1,5 @@
+require('./config/config');
+require('./db/mongoose');
 let express = require("express");
 const http = require('http');
 
