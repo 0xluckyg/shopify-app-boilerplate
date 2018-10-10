@@ -1,13 +1,15 @@
 {
     "test":{
         "PORT":3000,
-        "MONGODB_URI": "mongodb://localhost:27017/GroupifyTest"
+        "MONGODB_URI": "mongodb://localhost:27017/GroupifyTest",
+        "JWT_SECRET":"88aw9o01ei4gj6o43iwje2jgW4OIJE67G82Iw0a6e43ifj214"
     },
     "development":{
         "PORT":3000,
-        "MONGODB_URI": "mongodb://localhost:27017/GroupifyDevelopment"
+        "MONGODB_URI": "mongodb://localhost:27017/GroupifyDevelopment",
+        "JWT_SECRET":"88aw9o01ei4gj6o4aw3ie2jgW4O930sjG82Iw0a6e43ifj214"
     },
     "production":{
-
+        "JWT_SECRET":"88aw9o9201ngj6o4aw3ie2jgW4OIJE67G82Iw0a6e43ifj214"
     }
 }

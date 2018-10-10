@@ -10,14 +10,11 @@ const authenticate = (req, res, next) => {
         }
 
         req.user = user;
-        req.token = token;
-        //call next to move on
+        req.token = token;        
         next();
     }).catch((err) => {
         return res.status(401).send(err);
     });
 };
 
-module.exports = {
-    authenticate: authenticate
-};
+module.exports = { authenticate };
