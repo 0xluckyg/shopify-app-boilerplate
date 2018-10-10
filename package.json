@@ -2,7 +2,7 @@
 	"name": "groupify",
 	"version": "1.0.0",
 	"description": "",
-	"main": "main.js",
+	"main": "index.js",
 	"scripts": {
 		"start": "node app",
 		"test": "export NODE_ENV=test || \"SET NODE_ENV=test\" && mocha app/tests/index.test.js",
