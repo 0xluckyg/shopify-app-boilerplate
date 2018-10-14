@@ -20,6 +20,9 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json());
 
+user.login(app)
+user.signup(app)
+user.getUser(app)
 
 
 server.listen(port, () => {

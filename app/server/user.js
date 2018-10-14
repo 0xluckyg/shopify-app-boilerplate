@@ -40,3 +40,9 @@ function getUser(app) {
         });
     });
 }
+
+module.exports = {
+    login,
+    signup,
+    getUser
+};
