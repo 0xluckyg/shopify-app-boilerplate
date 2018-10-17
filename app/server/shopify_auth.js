@@ -4,6 +4,7 @@
 // https://help.shopify.com/en/api/getting-started/authentication/oauth
 // Shopify Permissions Scope
 // https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
+// For development use ngrok tunnelling ~/ngrok http 3000
 
 const crypto = require("crypto");
 const shopifyScopes = [
@@ -33,14 +34,22 @@ const shopifyScopes = [
     "unauthenticated_write_checkouts",
     "unauthenticated_write_customers"
 ]
+let host = "https://ed0a844c.ngrok.io"
 
 function formatURL(shopName) {
     let api_key = process.env.SHOPIFY_API_KEY
     let scopes = shopifyScopes.join()
-    let redirect_url = ""
+    let redirect_url = host + "/shopify/add_shop"
     const nonce = crypto.randomBytes(16).toString("hex")
 
-    let authUrl = `https://${shopName}.myshopify.com/admin/oauth/authorize?client_id=${api_key}&scope=${scopes}&redirect_uri=${redirect_uri}&state=${nonce}`
+    let authUrl = `https://${shopName}.myshopify.com/admin/oauth/authorize?
+                    client_id=${api_key}
+                    &scope=${scopes}
+                    &redirect_uri=${redirect_uri}
+                    &state=${nonce}`
     return authUrl
 }
 
+function securityCheck(shopName) {
+    
+}
