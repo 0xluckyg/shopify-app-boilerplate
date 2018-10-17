@@ -36,20 +36,39 @@ const shopifyScopes = [
 ]
 let host = "https://ed0a844c.ngrok.io"
 
-function formatURL(shopName) {
+function shopifyOAuthRequest(storeName, res) {
     let api_key = process.env.SHOPIFY_API_KEY
     let scopes = shopifyScopes.join()
-    let redirect_url = host + "/shopify/add_shop"
+    let redirect_uri = host + "/shopify/add_shopify"
     const nonce = crypto.randomBytes(16).toString("hex")
 
-    let authUrl = `https://${shopName}.myshopify.com/admin/oauth/authorize?
+    let authUrl = `https://${storeName}.myshopify.com/admin/oauth/authorize?
                     client_id=${api_key}
                     &scope=${scopes}
                     &redirect_uri=${redirect_uri}
                     &state=${nonce}`
-    return authUrl
+
+    res.redirect(authUrl)
 }
 
-function securityCheck(shopName) {
+function securityCheck(storeName) {
     
+}
+
+function saveStore() {
+
+}
+
+function addShopify(app) {
+    app.get('/shopify/add_shopify', (req, res) => {
+        securityCheck('')
+    })
+
+    app.post('/shopify/add_shopify', (req, res) => {
+        shopifyOAuthRequest(req.body.storeName, res)
+    })
+}
+
+module.exports = {
+    addShopify
 }

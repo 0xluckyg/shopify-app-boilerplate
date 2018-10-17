@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 let express = require("express");
 const http = require('http');
 const user = require('./server/user')
+const shopifyAuth = require('./server/shopify_auth')
 
 const app = express();
 const port = process.env.PORT;
@@ -23,6 +24,8 @@ app.use(bodyParser.json());
 user.login(app)
 user.signup(app)
 user.getUser(app)
+
+shopifyAuth.addShopify(app)
 
 
 server.listen(port, () => {
