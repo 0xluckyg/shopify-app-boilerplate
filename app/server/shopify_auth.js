@@ -5,8 +5,11 @@
 // Shopify Permissions Scope
 // https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
 // For development use ngrok tunnelling ~/ngrok http 3000
-
 const crypto = require("crypto");
+const url = require('url');
+const verify = require('../tools/verify');
+const request = require('request');
+
 const shopifyScopes = [
     "read_products",
     "write_products",
@@ -51,12 +54,58 @@ function shopifyOAuthRequest(storeName, res) {
     res.redirect(authUrl)
 }
 
-function securityCheck(storeName) {
-    
+function securityCheck(req, res) {
+    let regexFlag = false;
+    let securityFlag = false;
+    let shop = req.query.shop;
+    let code = req.query.code;
+    const regex = /^[a-z\d_.-]+[.]myshopify[.]com$/;
+
+    if (shop.match(regex)) {
+        console.log('regex matches');
+        regexFlag = true
+    } else {
+        regexFlag = false        
+    }
+
+    // 1. Parse the string URL to object
+    let urlObj = url.parse(req.url);
+    // 2. Get the 'query string' portion
+    let query = urlObj.search.slice(1);
+    if (verify.verify(query)) {
+        //get token
+        console.log('get token');
+        securityPass = true;
+    } else {        
+        securityPass = false;        
+    }
+
+    if (securityPass && regex) {
+        //Exchange temporary code for a permanent access token
+        let accessTokenRequestUrl = 'https://' + shop + '/admin/oauth/access_token';
+        let accessTokenPayload = {
+            client_id: appId,
+            client_secret: appSecret,
+            code,
+        };
+
+        request.post(accessTokenRequestUrl, { json: accessTokenPayload })
+            .then((accessTokenResponse) => {
+                let accessToken = accessTokenResponse.access_token;
+                console.log('shop token ' + accessToken);
+
+                //send acceptance
+            })
+            .catch((error) => {
+                res.status(error.statusCode).send(error.error.error_description);
+            });
+    } else {
+        //send error
+    }
 }
 
 function saveStore() {
-
+    
 }
 
 function addShopify(app) {
