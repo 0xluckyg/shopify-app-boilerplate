@@ -37,20 +37,19 @@ const shopifyScopes = [
     "unauthenticated_write_checkouts",
     "unauthenticated_write_customers"
 ]
-let host = "https://ed0a844c.ngrok.io"
+let host = "http://261babc9.ngrok.io"
 
-function shopifyOAuthRequest(storeName, res) {
+function shopifyOAuthRequest(req, res) {    
+    let storeName = req.body.storeName
     let api_key = process.env.SHOPIFY_API_KEY
     let scopes = shopifyScopes.join()
     let redirect_uri = host + "/shopify/add_shopify"
     const nonce = crypto.randomBytes(16).toString("hex")
 
-    let authUrl = `https://${storeName}.myshopify.com/admin/oauth/authorize?
-                    client_id=${api_key}
-                    &scope=${scopes}
-                    &redirect_uri=${redirect_uri}
-                    &state=${nonce}`
+    let authUrl = `https://${storeName}.myshopify.com/admin/oauth/authorize?client_id=${api_key}&scope=${scopes}&redirect_uri=${redirect_uri}&state=${nonce}`
 
+    console.log(authUrl)
+    res.cookie('state', nonce);
     res.redirect(authUrl)
 }
 
@@ -108,16 +107,25 @@ function saveStore() {
     
 }
 
-function addShopify(app) {
-    app.get('/shopify/add_shopify', (req, res) => {
-        securityCheck('')
+function deleteStore() {
+
+}
+
+function addShopify(app) {    
+    app.get('/shopify/add_shopify', (req, res) => {        
+        securityCheck(req, res)        
     })
 
     app.post('/shopify/add_shopify', (req, res) => {
-        shopifyOAuthRequest(req.body.storeName, res)
+        shopifyOAuthRequest(req, res)
     })
 }
 
+function removeShopify(app) {
+    
+}
+
 module.exports = {
-    addShopify
+    addShopify,
+    removeShopify
 }
