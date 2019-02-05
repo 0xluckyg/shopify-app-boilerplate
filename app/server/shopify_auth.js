@@ -5,12 +5,15 @@
 // Shopify Permissions Scope
 // https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
 // For development use ngrok tunnelling ~/ngrok http 3000
+
 const crypto = require("crypto");
 const url = require('url');
 const verify = require('../tools/verify');
 const request = require('request');
 
 const shopifyScopes = [
+    "",
+    "",
     "read_products",
     "write_products",
     "read_product_listings",
@@ -37,7 +40,7 @@ const shopifyScopes = [
     "unauthenticated_write_checkouts",
     "unauthenticated_write_customers"
 ]
-let host = "http://261babc9.ngrok.io"
+let host = "https://2e6e7a48.ngrok.io"
 
 function shopifyOAuthRequest(req, res) {    
     let storeName = req.body.storeName
@@ -48,9 +51,10 @@ function shopifyOAuthRequest(req, res) {
 
     let authUrl = `https://${storeName}.myshopify.com/admin/oauth/authorize?client_id=${api_key}&scope=${scopes}&redirect_uri=${redirect_uri}&state=${nonce}`
 
-    console.log(authUrl)
+    console.log('authURL: ',authUrl)
     res.cookie('state', nonce);
-    res.redirect(authUrl)
+    res.redirect(authUrl)  
+
 }
 
 function securityCheck(req, res) {
@@ -91,8 +95,7 @@ function securityCheck(req, res) {
         request.post(accessTokenRequestUrl, { json: accessTokenPayload })
             .then((accessTokenResponse) => {
                 let accessToken = accessTokenResponse.access_token;
-                console.log('shop token ' + accessToken);
-
+                console.log('shop token ' + accessToken);                
                 //send acceptance
             })
             .catch((error) => {
@@ -103,8 +106,8 @@ function securityCheck(req, res) {
     }
 }
 
-function saveStore() {
-    
+function saveStore() { 
+
 }
 
 function deleteStore() {
