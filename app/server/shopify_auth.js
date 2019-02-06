@@ -12,8 +12,6 @@ const verify = require('../tools/verify');
 const request = require('request');
 
 const shopifyScopes = [
-    "",
-    "",
     "read_products",
     "write_products",
     "read_product_listings",
