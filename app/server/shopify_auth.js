@@ -19,7 +19,8 @@ const shopifyScopes = [
     "write_customers",
     "read_orders",
     "write_orders",
-    // "read_all_orders", //Requires approval from Shopify Partners dashboard
+    "read_all_orders", 
+    //Requires approval from Shopify Partners dashboard
     "read_draft_orders",
     "write_draft_orders",
     "read_inventory",
