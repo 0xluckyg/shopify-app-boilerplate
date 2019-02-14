@@ -1,3 +1,13 @@
+// Shopify Partners Login
+// https://partners.shopify.com
+// OAuth Doc
+// https://help.shopify.com/en/api/getting-started/authentication/oauth
+// Shopify Permissions Scope
+// https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
+// For development use ngrok tunnelling ~/ngrok http 3000
+// Node Auth Help
+// https://help.shopify.com/en/api/tutorials/build-a-shopify-app-with-node-and-express#step-2-create-and-configure-your-app-in-the-partner-dashboard
+
 const crypto = require('crypto');
 const cookie = require('cookie');
 const nonce = require('nonce')();
@@ -76,7 +86,6 @@ function exchangePermanentAccessToken(req, res) {
     .then((accessTokenResponse) => {
         const accessToken = accessTokenResponse.access_token;
         
-        // TODO
         // Use access token to make API call to 'shop' endpoint
         const shopRequestUrl = 'https://' + shop + '/admin/shop.json';
         const shopRequestHeaders = {
